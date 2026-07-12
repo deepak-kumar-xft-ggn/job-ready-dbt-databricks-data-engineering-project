@@ -55,6 +55,11 @@ jobs:
       - name: Set up Databricks CLI
         uses: databricks/setup-cli@main
 
+      - name: Verify Databricks API access
+        run: |
+          databricks current-user me >/dev/null
+          databricks workspace ls /Workspace >/dev/null
+
       - name: Validate bundle
         run: databricks bundle validate -t dev
 
