@@ -19,6 +19,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify Databricks credentials
+        run: |
+          if [ -z "${DATABRICKS_HOST}" ] || [ -z "${DATABRICKS_TOKEN}" ]; then
+            echo "Missing DATABRICKS_HOST and/or DATABRICKS_TOKEN for environment dev."
+            echo "Set them in GitHub: Settings > Environments > dev > Secrets and variables > Actions."
+            exit 1
+          fi
+
       - name: Set up Databricks CLI
         uses: databricks/setup-cli@main
 
