@@ -3,6 +3,7 @@ name: Deploy bundle (prod)
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
