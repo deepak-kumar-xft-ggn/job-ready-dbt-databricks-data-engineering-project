@@ -19,15 +19,23 @@ jobs:
         env:
           DB_HOST_SECRET: ${{ secrets.DATABRICKS_HOST }}
           DB_HOST_ALT_SECRET: ${{ secrets.HOST_SECRET }}
+          DB_HOST_ALT2_SECRET: ${{ secrets.HOST }}
+          DB_HOST_ALT3_SECRET: ${{ secrets.DATABRICKS_URL }}
           DB_HOST_VAR: ${{ vars.DATABRICKS_HOST }}
           DB_HOST_ALT_VAR: ${{ vars.HOST_SECRET }}
+          DB_HOST_ALT2_VAR: ${{ vars.HOST }}
+          DB_HOST_ALT3_VAR: ${{ vars.DATABRICKS_URL }}
           DB_TOKEN_SECRET: ${{ secrets.DATABRICKS_TOKEN }}
           DB_TOKEN_ALT_SECRET: ${{ secrets.HOST_TOKEN }}
+          DB_TOKEN_ALT2_SECRET: ${{ secrets.TOKEN }}
+          DB_TOKEN_ALT3_SECRET: ${{ secrets.DATABRICKS_PAT }}
           DB_TOKEN_VAR: ${{ vars.DATABRICKS_TOKEN }}
           DB_TOKEN_ALT_VAR: ${{ vars.HOST_TOKEN }}
+          DB_TOKEN_ALT2_VAR: ${{ vars.TOKEN }}
+          DB_TOKEN_ALT3_VAR: ${{ vars.DATABRICKS_PAT }}
         run: |
-          host="${DB_HOST_SECRET:-${DB_HOST_ALT_SECRET:-${DB_HOST_VAR:-${DB_HOST_ALT_VAR:-}}}}"
-          token="${DB_TOKEN_SECRET:-${DB_TOKEN_ALT_SECRET:-${DB_TOKEN_VAR:-${DB_TOKEN_ALT_VAR:-}}}}"
+          host="${DB_HOST_SECRET:-${DB_HOST_ALT_SECRET:-${DB_HOST_ALT2_SECRET:-${DB_HOST_ALT3_SECRET:-${DB_HOST_VAR:-${DB_HOST_ALT_VAR:-${DB_HOST_ALT2_VAR:-${DB_HOST_ALT3_VAR:-}}}}}}}}"
+          token="${DB_TOKEN_SECRET:-${DB_TOKEN_ALT_SECRET:-${DB_TOKEN_ALT2_SECRET:-${DB_TOKEN_ALT3_SECRET:-${DB_TOKEN_VAR:-${DB_TOKEN_ALT_VAR:-${DB_TOKEN_ALT2_VAR:-${DB_TOKEN_ALT3_VAR:-}}}}}}}}"
 
           echo "DATABRICKS_HOST=${host}" >> "$GITHUB_ENV"
           echo "DATABRICKS_TOKEN=${token}" >> "$GITHUB_ENV"
@@ -37,7 +45,9 @@ jobs:
           if [ -z "${DATABRICKS_HOST}" ] || [ -z "${DATABRICKS_TOKEN}" ]; then
             echo "Missing DATABRICKS_HOST and/or DATABRICKS_TOKEN for environment prod."
             echo "Set credentials in Environment prod using Secrets or Variables."
-            echo "Accepted names: DATABRICKS_HOST + DATABRICKS_TOKEN, or HOST_SECRET + HOST_TOKEN."
+            echo "Accepted names for host: DATABRICKS_HOST, HOST_SECRET, HOST, DATABRICKS_URL."
+            echo "Accepted names for token: DATABRICKS_TOKEN, HOST_TOKEN, TOKEN, DATABRICKS_PAT."
+            echo "Ensure values are created in the Environment 'prod' (or repository-level) Actions Secrets/Variables."
             exit 1
           fi
 
