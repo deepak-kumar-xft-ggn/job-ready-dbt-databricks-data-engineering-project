@@ -11,19 +11,33 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
 
-    env:
-      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST || secrets.HOST_SECRET }}
-      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN || secrets.HOST_TOKEN }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Resolve Databricks credentials
+        env:
+          DB_HOST_SECRET: ${{ secrets.DATABRICKS_HOST }}
+          DB_HOST_ALT_SECRET: ${{ secrets.HOST_SECRET }}
+          DB_HOST_VAR: ${{ vars.DATABRICKS_HOST }}
+          DB_HOST_ALT_VAR: ${{ vars.HOST_SECRET }}
+          DB_TOKEN_SECRET: ${{ secrets.DATABRICKS_TOKEN }}
+          DB_TOKEN_ALT_SECRET: ${{ secrets.HOST_TOKEN }}
+          DB_TOKEN_VAR: ${{ vars.DATABRICKS_TOKEN }}
+          DB_TOKEN_ALT_VAR: ${{ vars.HOST_TOKEN }}
+        run: |
+          host="${DB_HOST_SECRET:-${DB_HOST_ALT_SECRET:-${DB_HOST_VAR:-${DB_HOST_ALT_VAR:-}}}}"
+          token="${DB_TOKEN_SECRET:-${DB_TOKEN_ALT_SECRET:-${DB_TOKEN_VAR:-${DB_TOKEN_ALT_VAR:-}}}}"
+
+          echo "DATABRICKS_HOST=${host}" >> "$GITHUB_ENV"
+          echo "DATABRICKS_TOKEN=${token}" >> "$GITHUB_ENV"
 
       - name: Verify Databricks credentials
         run: |
           if [ -z "${DATABRICKS_HOST}" ] || [ -z "${DATABRICKS_TOKEN}" ]; then
             echo "Missing DATABRICKS_HOST and/or DATABRICKS_TOKEN for environment prod."
-            echo "Set either DATABRICKS_HOST/DATABRICKS_TOKEN or HOST_SECRET/HOST_TOKEN in GitHub: Settings > Environments > prod > Secrets and variables > Actions."
+            echo "Set credentials in Environment prod using Secrets or Variables."
+            echo "Accepted names: DATABRICKS_HOST + DATABRICKS_TOKEN, or HOST_SECRET + HOST_TOKEN."
             exit 1
           fi
 
