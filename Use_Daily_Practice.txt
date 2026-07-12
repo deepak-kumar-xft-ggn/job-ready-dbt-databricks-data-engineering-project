@@ -1,0 +1,441 @@
+python3.12 -m venv venv
+
+#Create the venv with Python 3.12.9:
+
+& "C:\Users\Deepak Kumar\AppData\Local\Programs\Python\Python312\python.exe" -m venv .venv
+
+
+#Activate it:
+
+
+. .\.venv\Scripts\Activate.ps1
+
+
+#Verify it:
+python --version
+
+#If you want the one-line setup plus activation sequence:
+
+& "C:\Users\Deepak Kumar\AppData\Local\Programs\Python\Python312\python.exe" -m venv .venv; . .\.venv\Scripts\Activate.ps1
+
+
+# To install requirements.txt
+pip install -r requirements.txt
+
+
+
+
+
+PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> & "C:\Users\Deepak Kumar\AppData\Local\Programs\Python\Python312\python.exe" -m venv .venv; . .\.venv\Scripts\Activate.ps1
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> 
+
+
+
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> pip list
+Package                   Version
+------------------------- -----------
+agate                     1.9.1
+annotated-types           0.7.0
+attrs                     26.1.0
+babel                     2.18.0
+certifi                   2026.6.17
+cffi                      2.1.0
+charset-normalizer        3.4.9
+click                     8.4.2
+colorama                  0.4.6
+cryptography              49.0.0
+daff                      1.4.2
+databricks-sdk            0.117.0
+databricks-sql-connector  4.3.0
+dbt-adapters              1.24.4
+dbt-common                1.37.5
+dbt-core                  1.11.12
+dbt-databricks            1.12.2
+dbt-extractor             0.6.0
+dbt-protos                1.0.541
+dbt-semantic-interfaces   0.9.0
+dbt-spark                 1.10.3
+deepdiff                  8.6.2
+et_xmlfile                2.0.0
+google-auth               2.55.2
+idna                      3.18
+importlib_metadata        8.9.0
+isodate                   0.7.2
+jaraco.classes            3.4.0
+jaraco.context            6.1.2
+jaraco.functools          4.5.0
+Jinja2                    3.1.6
+jsonschema                4.26.0
+jsonschema-specifications 2025.9.1
+keyring                   25.5.0
+leather                   0.4.1
+lz4                       4.4.5
+MarkupSafe                3.0.3
+mashumaro                 3.14
+more-itertools            10.8.0
+msgpack                   1.2.1
+networkx                  3.6.1
+numpy                     2.5.1
+oauthlib                  3.3.1
+openpyxl                  3.1.5
+orderly-set               5.5.0
+packaging                 25.0
+pandas                    3.0.3
+parsedatetime             2.6
+pathspec                  0.12.1
+pip                       24.3.1
+protobuf                  6.33.6
+pyarrow                   25.0.0
+pyasn1                    0.6.4
+pyasn1_modules            0.4.2
+pybreaker                 1.4.1
+pycparser                 3.0
+pydantic                  2.12.5
+pydantic_core             2.41.5
+
+
+
+
+
+shopflow_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      host: "dbc-a15188f1-4014.cloud.databricks.com"
+      http_path: "/sql/1.0/warehouses/9848ad35bbe8eacb"
+      schema: silver
+      catalog: workspace
+      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      threads: 4
+      connect_timeout: 60
+      connect_retries: 3
+
+    prod:
+      type: databricks
+      host: "{{ env_var('DATABRICKS_HOST', 'dbc-21212121-afa2.cloud.databricks.com') }}"
+      http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'silver') }}"
+      catalog: "{{ env_var('DATABRICKS_CATALOG', 'workspace') }}"
+      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      threads: 8
+      connect_timeout: 60
+      connect_retries: 3
+
+
+
+
+dbt-databricks
+<REDACTED_DATABRICKS_TOKEN>
+
+
+
+09:36:32  Connection:
+09:36:32    host: dbc-a15188f1-4014.cloud.databricks.com
+09:36:32    http_path: /sql/1.0/warehouses/9848ad35bbe8eacb
+09:36:32    catalog: workspace
+09:36:32    schema: silver
+09:36:32  Registered adapter: databricks=1.12.2
+09:36:34  Databricks adapter:   SPOG host (host_type='workspace'): no
+09:36:34  Databricks adapter:   workspace_id (from ?o= in http_path): None
+09:36:34  Databricks adapter:   databricks-sql-connector version: 4.3.0 (supported)
+09:36:34  Databricks adapter:   databricks-sdk version: 0.117.0 (supported)
+09:36:50    Connection test: [OK connection ok]
+
+
+
+packages:
+  - package: dbt-labs/dbt_utils
+    version: "1.1.1"
+
+
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> dbt deps
+09:38:14  Running with dbt=1.11.12
+09:38:14  Installing dbt-labs/dbt_utils
+09:38:15  Installed from version 1.1.1
+09:38:15  Updated version available: 1.4.1
+09:38:15  
+09:38:15  Updates available for packages: ['dbt-labs/dbt_utils']                 
+Update your versions in packages.yml, then run dbt deps
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> 
+
+
+
+
+
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> dbt seed 
+09:44:40  Running with dbt=1.11.12
+09:44:42  Registered adapter: databricks=1.12.2
+09:44:43  Unable to do partial parsing because saved manifest not found. Starting full parse.
+09:44:47  Starting shopflow_analytics run
+09:44:47  Finished shopflow_analytics run
+09:44:48  Found 8 models, 1 snapshot, 37 data tests, 4 seeds, 2 operations, 3 exposures, 883 macros
+09:44:48  
+09:44:48  Concurrency: 4 threads (target='dev')
+09:44:48  
+09:45:01  Starting shopflow_analytics run
+09:45:01  1 of 1 START hook: shopflow_analytics.on-run-start.0 ........................... [RUN]
+09:45:01  1 of 1 OK hook: shopflow_analytics.on-run-start.0 .............................. [OK in 0.02s]
+09:45:01  
+09:45:01  1 of 4 START seed file bronze.raw_customers .................................... [RUN]
+09:45:01  2 of 4 START seed file bronze.raw_order_items .................................. [RUN]
+09:45:01  3 of 4 START seed file bronze.raw_orders ....................................... [RUN]
+09:45:01  4 of 4 START seed file bronze.raw_products ..................................... [RUN]
+09:45:18  4 of 4 OK loaded seed file bronze.raw_products ................................. [INSERT 10 in 16.44s]
+09:45:18  1 of 4 OK loaded seed file bronze.raw_customers ................................ [INSERT 10 in 16.44s]
+09:45:18  3 of 4 OK loaded seed file bronze.raw_orders ................................... [INSERT 20 in 16.44s]
+09:45:18  2 of 4 OK loaded seed file bronze.raw_order_items .............................. [INSERT 30 in 16.44s]
+09:45:18  
+09:45:18  Finished shopflow_analytics run
+09:45:18  1 of 1 START hook: shopflow_analytics.on-run-end.0 ............................. [RUN]
+09:45:18  1 of 1 OK hook: shopflow_analytics.on-run-end.0 ................................ [OK in 0.01s]
+09:45:18  
+09:45:18  Finished running 2 project hooks, 4 seeds in 0 hours 0 minutes and 30.12 seconds (30.12s).
+09:45:18  
+09:45:18  Completed successfully
+09:45:18  
+09:45:18  Done. PASS=6 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=6
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> 
+
+
+
+
+
+dbt seed --select raw_customers --full-refresh
+
+
+
+
+
+
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> dbt run
+13:25:58  Running with dbt=1.11.12
+13:26:00  Registered adapter: databricks=1.12.2
+13:26:01  Found 8 models, 1 snapshot, 37 data tests, 4 seeds, 2 operations, 3 exposures, 883 macros
+13:26:01  
+13:26:01  Concurrency: 4 threads (target='dev')
+13:26:01  
+13:26:16  Starting shopflow_analytics run
+13:26:16  1 of 1 START hook: shopflow_analytics.on-run-start.0 ........................... [RUN]
+13:26:16  1 of 1 OK hook: shopflow_analytics.on-run-start.0 .............................. [OK in 0.03s]
+13:26:16  
+13:26:16  1 of 8 START sql view model silver.stg_order_items ............................. [RUN]
+13:26:16  2 of 8 START sql view model silver.stg_orders .................................. [RUN]
+13:26:16  3 of 8 START sql view model silver.stg_products ................................ [RUN]
+13:26:21  3 of 8 OK created sql view model silver.stg_products ........................... [OK in 4.77s]
+13:26:21  1 of 8 OK created sql view model silver.stg_order_items ........................ [OK in 4.78s]
+13:26:21  2 of 8 OK created sql view model silver.stg_orders ............................. [OK in 4.78s]
+13:26:21  4 of 8 START sql table model gold.dim_products ................................. [RUN]
+13:26:21  5 of 8 START sql view model silver.int_order_items_with_product ................ [RUN]
+13:26:21  6 of 8 START sql view model silver.int_orders_enriched ......................... [RUN]
+13:26:25  5 of 8 OK created sql view model silver.int_order_items_with_product ........... [OK in 4.66s]
+13:26:25  6 of 8 OK created sql view model silver.int_orders_enriched .................... [OK in 4.66s]
+13:26:25  7 of 8 START sql incremental model gold.fct_order_items ........................ [RUN]
+13:26:25  8 of 8 START sql incremental model gold.fct_orders ............................. [RUN]
+13:26:33  4 of 8 OK created sql table model gold.dim_products ............................ [OK in 12.67s]
+13:26:38  7 of 8 OK created sql incremental model gold.fct_order_items ................... [OK in 12.53s]
+13:26:38  8 of 8 OK created sql incremental model gold.fct_orders ........................ [OK in 12.52s]
+13:26:38  
+13:26:38  Finished shopflow_analytics run
+13:26:38  1 of 1 START hook: shopflow_analytics.on-run-end.0 ............................. [RUN]
+13:26:38  1 of 1 OK hook: shopflow_analytics.on-run-end.0 ................................ [OK in 0.00s]
+13:26:38  
+13:26:38  Finished running 2 incremental models, 2 project hooks, 1 table model, 5 view models in 0 hours 0 minutes and 36.61 seconds (36.61s).
+13:26:38  
+13:26:38  Completed successfully
+13:26:38  
+13:26:38  Done. PASS=10 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=10
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> 
+
+
+Who are the customers who have more than one order (repeat customers)?
+
+DELETE FROM workspace.gold.scd_customers
+WHERE customer_id IS NULL
+
+
+
+dbt
+Project
+/Workspace/Users/deepak.snfk.adm1@outlook.com/job-ready-dbt-databricks-data-engineering-project-1
+Commands
+dbt deps
+dbt seed
+dbt snapshot
+dbt run
+dbt test
+
+
+
+edit as a yaml:-
+
+resources:
+  jobs:
+    dbt_databricks_job_ShopFlow:
+      name: dbt_databricks_job_ShopFlow
+      tasks:
+        - task_key: shop_Flow
+          dbt_task:
+            project_directory: /Workspace/Users/deepak.snfk.adm1@outlook.com/job-ready-dbt-databricks-data-engineering-project-1
+            commands:
+              - dbt deps
+              - dbt seed
+              - dbt snapshot
+              - dbt run
+              - dbt test
+            schema: bronze
+            warehouse_id: 9848ad35bbe8eacb
+            catalog: workspace
+            source: WORKSPACE
+          environment_key: dbt-default
+      queue:
+        enabled: true
+      environments:
+        - environment_key: dbt-default
+          spec:
+            dependencies:
+              - dbt-databricks>=1.0.0,<2.0.0
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
+
+
+
+
+cd .\job-ready-dbt-databricks-data-engineering-project-main
+git remote add origin https://github.com/<your-username>/<your-repo>.git
+git remote -v
+git pull origin master
+
+gh repo clone deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project
+
+gh repo clone deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project
+
+If your GitHub default branch is main, use this instead of the last line:
+
+
+git remote add origin https://github.com/deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project.git
+git remote -v
+git pull origin master
+
+
+
+13:26:38  Done. PASS=10 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=10
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git config --global user.name "Deepak Kumar"
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git config --global user.email "deepak.kr.dba@gmail.com"
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git config --global user.email
+deepak.kr.dba@gmail.com
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git status
+fatal: not a git repository (or any of the parent directories): .git
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git init
+Initialized empty Git repository in E:/Daily_Databricks/anirvan_databricks_dbt/job-ready-dbt-databricks-data-engineering-project-main/job-ready-dbt-databricks-data-engineering-project-main/.git/
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> dir
+
+
+    Directory: E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main
+
+
+Mode                 LastWriteTime         Length Name                                                                                                                                                                                                    
+----                 -------------         ------ ----                                                                                                                                                                                                    
+d-----         7/12/2026   2:14 PM                .github                                                                                                                                                                                                 
+d-----         7/12/2026   2:53 PM                .venv                                                                                                                                                                                                   
+d-----         7/12/2026   7:30 PM                dbt_packages                                                                                                                                                                                            
+d-----         7/12/2026   2:14 PM                docs                                                                                                                                                                                                    
+d-----         7/12/2026   2:16 PM                logs                                                                                                                                                                                                    
+d-----         7/12/2026   2:14 PM                macros                                                                                                                                                                                                  
+d-----         7/12/2026   2:14 PM                models                                                                                                                                                                                                  
+d-----         7/12/2026   2:14 PM                resources                                                                                                                                                                                               
+d-----         7/12/2026   2:14 PM                seeds                                                                                                                                                                                                   
+d-----         7/12/2026   2:14 PM                snapshots                                                                                                                                                                                               
+d-----         7/12/2026   7:30 PM                target                                                                                                                                                                                                  
+d-----         7/12/2026   2:14 PM                tests                                                                                                                                                                                                   
+-a----         7/12/2026   3:05 PM           4483 .gitignore                                                                                                                                                                                              
+-a----         7/12/2026   3:05 PM             42 .user.yml                                                                                                                                                                                               
+-a----         7/12/2026   2:14 PM           1014 databricks.yml                                                                                                                                                                                          
+-a----         7/12/2026   2:14 PM           1562 dbt_project.yml                                                                                                                                                                                         
+-a----         7/12/2026   2:14 PM           1071 LICENSE                                                                                                                                                                                                 
+-a----         7/12/2026   2:14 PM            133 package-lock.yml                                                                                                                                                                                        
+-a----         7/12/2026   2:14 PM             63 packages.yml                                                                                                                                                                                            
+-a----         7/12/2026   3:06 PM            351 profiles.yml                                                                                                                                                                                            
+-a----         7/12/2026   2:14 PM            741 profiles.yml.example                                                                                                                                                                                    
+-a----         7/12/2026   2:14 PM            687 raw_customers.csv                                                                                                                                                                                       
+-a----         7/12/2026   2:14 PM           8296 README.md                                                                                                                                                                                               
+-a----         7/12/2026   2:14 PM             44 requirements.txt                                                                                                                                                                                        
+-a----         7/12/2026   7:36 PM          12111 Use_Daily_Practice.txt                                                                                                                                                                                  
+
+
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=<remote>/<branch> master
+
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git pull origin main
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git remote add origin https://github.com/deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project.git
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git remote -v
+origin  https://github.com/deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project.git (fetch)
+origin  https://github.com/deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project.git (push)
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> git pull origin main   
+remote: Enumerating objects: 100, done.
+remote: Counting objects: 100% (100/100), done.
+remote: Compressing objects: 100% (76/76), done.
+remote: Total 100 (delta 22), reused 88 (delta 14), pack-reused 0 (from 0)
+Receiving objects: 100% (100/100), 192.47 KiB | 3.56 MiB/s, done.
+Resolving deltas: 100% (22/22), done.
+From https://github.com/deepak-kumar-xft-ggn/job-ready-dbt-databricks-data-engineering-project
+ * branch            main       -> FETCH_HEAD
+ * [new branch]      main       -> origin/main
+error: The following untracked working tree files would be overwritten by merge:
+        .github/workflows/deploy-bundle-dev.yml
+        .github/workflows/deploy-bundle-prod.yml
+        .gitignore
+        LICENSE
+        README.md
+        databricks.yml
+        dbt_project.yml
+        docs/analysis_notebook.ipynb
+        docs/star_schema.png
+        macros/generate_schema_name.sql
+        models/intermediate/_intermediate_models.yml
+        models/intermediate/int_order_items_with_product.sql
+        models/intermediate/int_orders_enriched.sql
+        models/marts/core/_exposures.yml
+        models/marts/core/_marts_core.yml
+        models/marts/core/dim_products.sql
+        models/marts/core/fct_order_items.sql
+        models/marts/core/fct_orders.sql
+        models/staging/_staging_models.yml
+        models/staging/stg_order_items.sql
+        models/staging/stg_orders.sql
+        models/staging/stg_products.sql
+        package-lock.yml
+        packages.yml
+        profiles.yml.example
+        requirements.txt
+        resources/dbt_shopflow_job.yml
+        seeds/raw_customers.csv
+        seeds/raw_order_items.csv
+        seeds/raw_orders.csv
+        seeds/raw_products.csv
+        snapshots/.gitkeep
+        snapshots/_snapshots.yml
+        snapshots/scd_customers.sql
+        tests/_singular_tests.yml
+        tests/assert_customer_has_valid_email.sql
+        tests/assert_fct_orders_revenue_non_negative.sql
+        tests/assert_no_future_order_dates.sql
+        tests/assert_product_price_positive.sql
+        tests/assert_quantity_positive.sql
+Please move or remove them before you merge.
+Aborting
+(.venv) PS E:\Daily_Databricks\anirvan_databricks_dbt\job-ready-dbt-databricks-data-engineering-project-main\job-ready-dbt-databricks-data-engineering-project-main> 
+
