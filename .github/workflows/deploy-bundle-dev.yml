@@ -13,8 +13,8 @@ jobs:
     environment: dev
 
     env:
-      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST || secrets.HOST_SECRET }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN || secrets.HOST_TOKEN }}
 
     steps:
       - name: Checkout
@@ -24,7 +24,7 @@ jobs:
         run: |
           if [ -z "${DATABRICKS_HOST}" ] || [ -z "${DATABRICKS_TOKEN}" ]; then
             echo "Missing DATABRICKS_HOST and/or DATABRICKS_TOKEN for environment dev."
-            echo "Set them in GitHub: Settings > Environments > dev > Secrets and variables > Actions."
+            echo "Set either DATABRICKS_HOST/DATABRICKS_TOKEN or HOST_SECRET/HOST_TOKEN in GitHub: Settings > Environments > dev > Secrets and variables > Actions."
             exit 1
           fi
 
